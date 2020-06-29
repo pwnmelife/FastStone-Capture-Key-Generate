@@ -1,0 +1,1 @@
+# FastStone-Capture-Key-Generate
