@@ -14,6 +14,22 @@ def randomString(stringLength=8):
     letters = string.ascii_uppercase
     return ''.join(random.choice(letters) for i in range(stringLength))
 
+def generate_8_upper_case():
+    # Family License that covers up to 5 computers 1111
+    family_registeration_code = "{0}{1}{2}{3}{4}{5}{6}{7}".format(randomString(1), 'P', randomString(1), 'N', randomString(1), 'K', randomString(1), 'E')
+    # Educational Site License 4997
+    education_site_registeration_code = "{0}{1}{2}{3}{4}{5}{6}{7}".format(randomString(1), 'V', randomString(1), 'Q', randomString(1), 'R', randomString(1), 'M')
+    # Educational Worldwide License 4998
+    education_worldwide_registeration_code = "{0}{1}{2}{3}{4}{5}{6}{7}".format(randomString(1), 'W', randomString(1), 'Q', randomString(10), 'R', randomString(1), 'M')
+    # Corporate Site License 4999
+    Corporate_site_registeration_code = "{0}{1}{2}{3}{4}{5}{6}{7}".format(randomString(1), 'X', randomString(1), 'Q', randomString(1), 'R', randomString(1), 'M')
+    # Corporate Worldwide License  5000
+    corporate_worldwide_registeration_code = "{0}{1}{2}{3}{4}{5}{6}{7}".format(randomString(1), 'T', randomString(1), 'R', randomString(1), 'K', randomString(1), 'E')
+    
+    return [family_registeration_code, education_site_registeration_code, education_worldwide_registeration_code, Corporate_site_registeration_code, corporate_worldwide_registeration_code]
+    
+    
+
 def get_sha_one_value(data, is_hex):
     sha_one = hashlib.sha1(data)
     if is_hex:
@@ -177,10 +193,10 @@ def middle_8_character():
     return upper_character[:4] if len(upper_character) >= 4 else []
 
 def check(data):
-    first = str(ord(data[4-1]) - ord('M'))
-    second = str(ord(data[8-1]) - ord('D'))
-    third = str(ord(data[6-1]) - ord('I'))
-    forth = str(ord(data[2-1]) - ord('O'))
+    first = str(ord(data[4-1]) - ord('M')) # 3
+    second = str(ord(data[8-1]) - ord('D')) # 7
+    third = str(ord(data[6-1]) - ord('I')) # 5
+    forth = str(ord(data[2-1]) - ord('O')) # 1
     s = first + second + third + forth
     if '-' in s:
         return False
@@ -192,16 +208,23 @@ def main():
     global register_code
     username = input('please input a username: ')
     username = username.upper()
-    while True:
-        register_code = randomString()
+    registeration_code = generate_8_upper_case()
+    hint_information = [
+        "Family License",
+        "Educational Site License",
+        "Educational Worldwide License",
+        "Corporate Site License",
+        "Corporate Worldwide License"
+    ]
+    for i in range(len(registeration_code)):
+        register_code = registeration_code[i]
         first = front_8_character() # front 8 character
         second  = middle_8_character()
         if len(first) > 0 and len(second) > 0:
             full_register_code = register_code + first + second
             result = check(full_register_code)
             if result:
-                print("register code: {0}".format(full_register_code))
-                break
+                print("{0}: {1}".format(hint_information[i], full_register_code))
 
 
 
